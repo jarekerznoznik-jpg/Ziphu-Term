@@ -6,7 +6,18 @@ from .repl import start_repl
 from .agent import agent_loop, SYSTEM_PROMPT
 from .config import ZHIPUAI_MODEL, ZHIPUAI_BASE_URL, get_config
 
-app = typer.Typer(help="GLM Coder - AI coding assistant powered by Zhipu AI")
+app = typer.Typer(help="GLM Coder - AI coding assistant powered by Zhipu AI", invoke_without_command=True)
+
+@app.callback(invoke_without_command=True)
+def main(
+    ctx: typer.Context,
+    model: str = typer.Option(ZHIPUAI_MODEL, help="Model to use"),
+    base_url: str = typer.Option(ZHIPUAI_BASE_URL, help="API base URL override"),
+    resume: bool = typer.Option(False, help="Resume last session"),
+):
+    """Start interactive coding session (default) or use subcommands."""
+    if ctx.invoked_subcommand is None:
+        chat(model=model, base_url=base_url, resume=resume)
 
 @app.command()
 def chat(
@@ -19,8 +30,7 @@ def chat(
         client = get_client(base_url=base_url)
         history = ConversationHistory()
         if resume:
-            # Simple logic to find latest session
-            history.load() # This would need more robust logic to find the LATEST
+            history.load()
             
         start_repl(history, client, model)
     except Exception as e:

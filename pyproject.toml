@@ -18,6 +18,7 @@ dependencies = [
 
 [project.scripts]
 glm-coder = "glm_coder.cli:app"
+gc = "glm_coder.cli:chat_default"
 
 [tool.setuptools.packages.find]
 where = ["src"]
