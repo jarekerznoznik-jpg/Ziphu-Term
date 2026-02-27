@@ -17,9 +17,8 @@ console = Console(theme=custom_theme)
 
 def display_welcome():
     console.print(Panel.fit(
-        "[bold blue]GLM Coder[/bold blue] - Agentic AI Coding Assistant
-"
-        "Powered by Zhipu AI GLM Models",
+        """[bold blue]GLM Coder[/bold blue] - Agentic AI Coding Assistant
+Powered by Zhipu AI GLM Models""",
         title="Welcome",
         border_style="blue"
     ))

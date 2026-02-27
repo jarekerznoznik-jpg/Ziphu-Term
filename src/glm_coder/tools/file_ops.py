@@ -16,7 +16,7 @@ def read_file(path: str, start_line: int = None, end_line: int = None) -> str:
         
         with open(file_path, 'rb') as f:
             chunk = f.read(8192)
-            if b'\x00' in chunk:
+            if b'\\x00' in chunk:
                 return f"Error: File {path} appears to be binary."
         
         with open(file_path, 'r', encoding='utf-8', errors='replace') as f:
@@ -73,23 +73,14 @@ def edit_file(path: str, old_text: str, new_text: str) -> str:
             old_lines = old_text.splitlines()
             
             # Simple fuzzy: strip trailing whitespace
-            content_stripped = "
-".join([l.rstrip() for l in lines])
-            old_text_stripped = "
-".join([l.rstrip() for l in old_lines])
+            content_stripped = "\\n".join([l.rstrip() for l in lines])
+            old_text_stripped = "\\n".join([l.rstrip() for l in old_lines])
             
             if old_text_stripped in content_stripped:
-                # This is a bit complex to reconstruct accurately with original whitespace
-                # For simplicity in this implementation, if fuzzy match is needed, we might just fail
-                # but let's try a better exact match by checking each line
                 return f"Error: Could not find exact match for old_text in {path}. Please ensure whitespace and indentation match exactly, or re-read the file."
             else:
-                first_3_lines = "
-".join(old_lines[:3])
-                return f"Error: Could not find the text to replace in {path}.
-First 3 lines of search text:
-{first_3_lines}
-Please re-read the file to get the exact content."
+                first_3_lines = "\\n".join(old_lines[:3])
+                return f"Error: Could not find the text to replace in {path}.\\nFirst 3 lines of search text:\\n{first_3_lines}\\nPlease re-read the file to get the exact content."
 
         temp_path = file_path.with_suffix('.tmp')
         temp_path.write_text(new_content, encoding='utf-8')

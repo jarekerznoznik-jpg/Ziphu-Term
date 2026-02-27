@@ -39,9 +39,7 @@ class ConversationHistory:
             
         num_tokens = 0
         for message in self.messages:
-            num_tokens += 4 # every message follows <im_start>{role/name}
-{content}<im_end>
-
+            num_tokens += 4 # every message follows <im_start>{role/name}\n{content}<im_end>\n
             for key, value in message.items():
                 if value:
                     num_tokens += len(encoding.encode(str(value)))

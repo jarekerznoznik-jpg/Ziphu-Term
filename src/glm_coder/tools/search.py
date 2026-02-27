@@ -28,8 +28,7 @@ def list_directory(path: str = ".") -> str:
                 items.append("... (truncated)")
                 break
                 
-        return "
-".join(items) if items else "(empty directory)"
+        return "\\n".join(items) if items else "(empty directory)"
     except Exception as e:
         return f"Error listing directory {path}: {str(e)}"
 
@@ -54,7 +53,7 @@ def search_files(pattern: str, path: str = ".", file_pattern: str = None) -> str
                 try:
                     # Check if binary
                     with open(file_path, 'rb') as f:
-                        if b'\x00' in f.read(1024):
+                        if b'\\x00' in f.read(1024):
                             continue
                             
                     with open(file_path, 'r', encoding='utf-8', errors='replace') as f:
@@ -63,13 +62,11 @@ def search_files(pattern: str, path: str = ".", file_pattern: str = None) -> str
                                 matches.append(f"{file_path}:{i}: {line.strip()}")
                                 if len(matches) >= 100:
                                     matches.append("... (truncated)")
-                                    return "
-".join(matches)
+                                    return "\\n".join(matches)
                 except Exception:
                     continue
                     
-        return "
-".join(matches) if matches else "No matches found."
+        return "\\n".join(matches) if matches else "No matches found."
     except Exception as e:
         return f"Error searching files: {str(e)}"
 
@@ -94,7 +91,6 @@ def glob_files(pattern: str) -> str:
                 results.append("... (truncated)")
                 break
                 
-        return "
-".join(results) if results else "No matches found."
+        return "\\n".join(results) if results else "No matches found."
     except Exception as e:
         return f"Error globbing files: {str(e)}"

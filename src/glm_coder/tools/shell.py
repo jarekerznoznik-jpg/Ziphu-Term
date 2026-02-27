@@ -17,16 +17,11 @@ def run_command(command: str, timeout: int = 120) -> str:
             timeout=timeout
         )
         
-        output = f"Exit Code: {result.returncode}
-"
+        output = f"Exit Code: {result.returncode}\\n"
         if result.stdout:
-            output += f"STDOUT:
-{result.stdout}
-"
+            output += f"STDOUT:\\n{result.stdout}\\n"
         if result.stderr:
-            output += f"STDERR:
-{result.stderr}
-"
+            output += f"STDERR:\\n{result.stderr}\\n"
             
         if len(output) > 10000:
             output = output[:10000] + "... (output truncated)"

@@ -8,6 +8,7 @@ load_dotenv()
 CONFIG_DIR = Path.home() / ".glm-coder"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 SESSIONS_DIR = CONFIG_DIR / "sessions"
+ERROR_LOG_FILE = CONFIG_DIR / "errors.jsonl"
 
 # Ensure config directory exists
 CONFIG_DIR.mkdir(parents=True, exist_ok=True)

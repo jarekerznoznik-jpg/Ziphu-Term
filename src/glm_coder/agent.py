@@ -3,6 +3,8 @@ from rich.live import Live
 from rich.markdown import Markdown
 from .tools import TOOL_REGISTRY, get_tools_schemas
 from .display import console, display_tool_call, confirm_action, display_tool_result, display_error
+from .logger import log_error
+from .config import ERROR_LOG_FILE
 
 MAX_ITERATIONS = 25
 
@@ -64,7 +66,8 @@ def agent_loop(user_input, history, client, model):
                                 tool_calls_buffer[idx]["arguments"] += tc.function.arguments
             except Exception as e:
                 live.stop()
-                display_error(f"LLM Error: {str(e)}")
+                log_error("LLM_STREAM_ERROR", str(e), {"model": model})
+                display_error(f"LLM Error: {str(e)}\\nDetails logged to {ERROR_LOG_FILE}")
                 return
 
         # Reconstruction of assistant message
@@ -109,7 +112,8 @@ def agent_loop(user_input, history, client, model):
                 try:
                     result = tool_func(**args)
                 except Exception as e:
-                    result = f"Error executing {name}: {str(e)}"
+                    log_error("TOOL_EXECUTION_ERROR", str(e), {"tool": name, "args": args})
+                    result = f"Error executing {name}: {str(e)}\\nDetails logged to {ERROR_LOG_FILE}"
             else:
                 result = f"Error: Tool {name} not found."
             

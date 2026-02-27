@@ -43,9 +43,7 @@ def get_tool_schema(func):
         "type": "function",
         "function": {
             "name": func.__name__,
-            "description": doc.split("
-
-")[0] if doc else "",
+            "description": doc.split("\\n\\n")[0] if doc else "",
             "parameters": {
                 "type": "object",
                 "properties": properties,
