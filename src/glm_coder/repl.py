@@ -58,7 +58,7 @@ def start_repl(history, client, model):
                 elif cmd == "/key":
                     from rich.prompt import Prompt
                     from .config import save_config
-                    new_key = Prompt.ask("Enter new Zhipu AI API Key", password=True)
+                    new_key = Prompt.ask("Enter new Zhipu AI API Key", password=False)
                     if new_key:
                         save_config({"api_key": new_key})
                         client.api_key = new_key

@@ -11,7 +11,7 @@ def get_client(api_key=None, base_url=None):
     if not key:
         console.print("[warning]ZHIPUAI_API_KEY is not set.[/warning]")
         console.print("You can find your API key at: [bold blue]https://open.bigmodel.cn/usercenter/apikeys[/bold blue]")
-        key = Prompt.ask("Please enter your Zhipu AI API Key", password=True)
+        key = Prompt.ask("Please enter your Zhipu AI API Key", password=False)
         if key:
             save_config({"api_key": key})
             console.print("[info]API Key saved to config.[/info]")
