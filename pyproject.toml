@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "glm-coder"
+version = "0.1.0"
+description = "Agentic CLI tool powered by Zhipu AI GLM models"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0.0",
+    "rich>=13.0.0",
+    "prompt-toolkit>=3.0.0",
+    "typer[all]>=0.9.0",
+    "tiktoken>=0.5.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+glm-coder = "glm_coder.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
