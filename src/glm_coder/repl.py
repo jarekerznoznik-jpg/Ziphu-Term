@@ -55,6 +55,15 @@ def start_repl(history, client, model):
                     else:
                         console.print(f"[info]Current model: {model}[/info]")
                     continue
+                elif cmd == "/key":
+                    from rich.prompt import Prompt
+                    from .config import save_config
+                    new_key = Prompt.ask("Enter new Zhipu AI API Key", password=True)
+                    if new_key:
+                        save_config({"api_key": new_key})
+                        client.api_key = new_key
+                        console.print("[info]API Key updated.[/info]")
+                    continue
             
             agent_loop(user_input, history, client, model)
             

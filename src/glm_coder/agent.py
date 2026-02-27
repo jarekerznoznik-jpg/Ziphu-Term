@@ -67,7 +67,10 @@ def agent_loop(user_input, history, client, model):
             except Exception as e:
                 live.stop()
                 log_error("LLM_STREAM_ERROR", str(e), {"model": model})
-                display_error(f"LLM Error: {str(e)}\\nDetails logged to {ERROR_LOG_FILE}")
+                msg = str(e)
+                if "401" in msg or "验证不正确" in msg:
+                    msg = "Invalid API Key. Use [bold]/key[/bold] to update it or check your Zhipu AI dashboard."
+                display_error(f"LLM Error: {msg}\\nDetails logged to {ERROR_LOG_FILE}")
                 return
 
         # Reconstruction of assistant message
