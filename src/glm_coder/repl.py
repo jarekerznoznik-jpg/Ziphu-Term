@@ -24,6 +24,9 @@ def start_repl(history, client, model):
             if not user_input.strip():
                 continue
                 
+            if user_input.lower() in ["exit", "quit"]:
+                break
+                
             if user_input.startswith("/"):
                 cmd = user_input.split()[0]
                 if cmd in ["/exit", "/quit"]:
